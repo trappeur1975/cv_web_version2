@@ -1,0 +1,2 @@
+travail personnel ou l'objectif etait de mettre a jour le projet "cv_web_version1" en y integrant du "responsive" via l'utilisation de media queries.
+ici le cv est reponsive pour une taille d'écran inférieur a  640px.

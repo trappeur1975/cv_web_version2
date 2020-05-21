@@ -1,0 +1,933 @@
+// couleur du site
+$colorPrimary: #2144AC;
+$colorSecondary: #3BA3D0;
+$colorTertiary: #4ab1d7;
+$colorQuaternary: #FF8B00;
+$colorCinquernary: #7f7f7f;
+
+// bloc flex
+@mixin bloc-flex($direction, $justifyContent, $alignIitems){
+	display: flex;
+	flex-direction: $direction;
+	justify-content: $justifyContent;
+	align-items: $alignIitems;
+}
+
+// pour positionner un element sur le site en absolu
+@mixin positionElementAbsolute($top, $bottom, $left, $right, $heigth, $width, $zIndex, $position: absolute){
+	top: $top;
+	bottom: $bottom;
+	left: $left;
+	right: $right;
+	height: $heigth;
+	width: $width;
+	z-index: $zIndex;
+	position: $position;
+}
+
+@mixin positionElementRelative($height, $width, $display: block, $position: relative){
+		height: $height;
+		width: $width;
+		display: block;
+		position: relative; //important
+}
+
+// formatage du texte
+@mixin textFormatting($color, $fontFamily, $fontStyle, $fontSize, $fontWeight, $textAlign, $textDecoration, $lineHeight){
+	color: $color;
+	font-family: $fontFamily;
+	font-style: $fontStyle;
+	font-size: $fontSize;
+	font-weight: $fontWeight;	
+	text-align: $textAlign;
+	text-decoration: $textDecoration;
+	line-height: $lineHeight;
+}
+
+//mise en forme en cerle
+@mixin circleShape( $border, $backgroundColor, $borderRadius: 50%){
+	border: $border;
+	background-color: $backgroundColor;
+	border-radius: $borderRadius;
+}
+
+//les animations
+@keyframes rotationIcon {
+    to {
+    	transform: rotate(360deg);
+	}
+}
+
+@keyframes zoomText {
+    0%{
+		transform: scale(1.0);
+    }
+    20%{
+    	transform: scale(1.2);
+    	line-height: 20px;
+
+	}
+	40%{
+    	transform: scale(1.4);
+    	line-height: 22px;
+
+	}
+	60%{
+    	transform: scale(1.6);
+    	line-height: 24px;
+
+	}
+	80%{
+    	transform: scale(1.8);
+    	line-height: 26px;
+
+	}
+    100%{
+    	transform: scale(2);
+    	line-height: 28px;
+
+	}
+}
+
+@keyframes backgoundColorOrange {
+    to {
+    	background-color: $colorQuaternary;
+	}
+}
+
+@keyframes ColorOrange {
+    to {
+    	color: $colorQuaternary;
+	}
+}
+
+@keyframes translateLeft {
+    from {
+    	transform: translateX(500px);
+    	opacity:0;
+	}
+    to {
+    	transform: translateX(0px);
+	}
+}
+
+@keyframes shake {
+    25% {
+        transform: rotate(90deg);
+    }
+    75% {
+        transform: rotate(-30deg);
+    }
+}
+
+
+/*-------------- elements communs aux sections----------------*/
+
+	/*section contenu*/
+	.section-content {
+		@include bloc-flex(row, space-between, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			@include bloc-flex(column, null, null);
+			order: 2;
+		}
+		
+		// contenu de "section contenu" aligne en position basse
+		&--positionLow {
+			align-items:flex-end;
+			@media (max-width: 640px){ //------------ modification ------------------------
+				order: 3;
+				align-items:center;
+			}
+		}
+	}
+
+	/*bloc competence*/
+	.skill {
+		@include bloc-flex(column, null, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			order: 4;
+			width: 100%;
+		}
+
+		// largeur bloc competence
+		&--width40 {
+			width: 40%;
+			@media (max-width: 640px){ //------------ modification ------------------------
+				width: 100%;
+			}
+		}
+
+		&--width60{
+			width: 60%;
+			
+			// pour la note de couleur gris en bas de bloc skill 
+			> p {
+				@include textFormatting($colorCinquernary, null, italic, null, null, right, null, null);
+				margin-right: 30px;
+			}
+
+			@media (max-width: 640px){ //------------ modification ------------------------
+				width: 100%;
+			}
+
+		}
+
+		&--width70 {
+			width: 70%;
+			@media (max-width: 640px){ //------------ modification ------------------------
+				width: 100%;
+			}
+		}
+	}
+
+		/* le titre du bloc competence*/
+		.skill-title {
+			@include bloc-flex(row, null, center);
+
+			// couleur du titre
+			&__heading {
+				@include textFormatting($colorQuaternary, null, null, 2em, null, null, null, null);
+				margin-left: 10px;
+			}
+			
+			// animation des icones
+			img {
+				&:hover {
+					animation: rotationIcon 3s infinite linear;
+				}
+			}
+
+		}
+
+
+	/*bloc experience*/
+	.experience {
+		@include bloc-flex(column, null, null);
+
+		// largeur du bloc experience
+		&--width250 {
+			width: 250px;
+			/*line-height: 0px;*/
+		}
+
+		// largeur du bloc experience
+		&--margin {
+			margin-left: 25%;
+			margin-bottom: 10%;
+			@media (max-width: 640px){ //------------ modification ------------------------
+				width: 100%;
+				margin-left: auto;
+				margin-bottom: auto;
+			}
+		
+			p:nth-child(1) {		
+				@media (max-width: 640px){
+					// background-color: red;
+					@include textFormatting($colorQuaternary, null, null, 2em, null, center, null, null);
+				}
+			}
+		}
+	}
+		
+		/*titre du bloc experience*/
+		.experience__title {
+			@include bloc-flex(column, center, center);
+			@include textFormatting(null, null, null, null, bold, null, null, 0px);
+			align-items: center;
+
+			strong{
+				@include textFormatting($colorPrimary, null, null, null, null, null, null, null);
+				//animation
+				animation: ColorOrange 3000ms forwards reverse linear infinite;
+			}
+		}
+		
+		/*animation des experience__title strong*/
+		#diplome1 {
+			animation-delay: 600ms;
+		}
+		#diplome2{
+			animation-delay: 1200ms;
+		}
+		#diplome3{
+			animation-delay: 1800ms;
+		}
+
+		/*description du bloc experience*/
+		.experience__quote {
+			@include textFormatting($colorTertiary, null, italic, null, null, justify, null, 140%);
+
+			em {
+				@include textFormatting($colorPrimary, null, null, null, null, null, null, null);
+			}
+			
+			@media (max-width: 640px){ //------------ modification ------------------------
+				@include textFormatting($colorPrimary, null, null, null, null, center, null, null);
+			}
+		}
+
+	/*les cercles*/
+	.cercle {	
+		@include circleShape(3px black solid, $colorPrimary);
+
+		&--little {
+			height: 13px;
+			width: 13px;
+			//animation cercle little
+			animation: backgoundColorOrange 5000ms forwards reverse linear infinite;
+		}
+
+		&--big {
+			height: 20px;
+			width: 20px;
+			//animation cercle big
+			animation: backgoundColorOrange 3000ms forwards reverse linear infinite;
+		}
+	}
+
+	/*les barres*/
+	.barre {
+		height: 2px;
+		background-color: $colorSecondary;
+	}
+
+/*--------------cadre du site----------------*/
+.container {
+		@include bloc-flex(column, null, null);
+		@include textFormatting(black, calibri, null, null, null, null, null, null);
+		width: 1200px;
+		margin-right: auto;
+		margin-left: auto;
+		@media (max-width: 640px){ //------------ modification ------------------------
+			width: 100%;
+		}
+	}
+
+/*--------------header----------------*/
+.header {
+	@include bloc-flex(row, space-around, null);
+	@media (max-width: 640px){ //------------ modification ------------------------
+		@include bloc-flex(column, flex-start, flex-start);
+		order: 1;
+		width: 100%;
+	}
+}
+
+	/*bloc photo*/
+	figure {
+		@include positionElementRelative(255px, null);
+		margin-right: auto;
+		margin-left: auto;
+		@media (max-width: 640px){ //------------ modification ------------------------
+			margin-bottom: 50px;
+		}
+
+		img {
+			@include circleShape(2px $colorCinquernary solid, null);
+			width: 300px;
+		}
+		
+		figcaption {
+			@include positionElementAbsolute(230px, null, 60px, null, null, null, null);
+			@include textFormatting($colorPrimary, null, null, 1.8em, bold, null, null, null);
+		}
+	}
+
+	.header-description {
+		width: 70%;
+		line-height: 80%;
+		@media (max-width: 640px){ //------------ modification ------------------------
+			width: 100%;
+		}
+
+		&__title {
+			@include textFormatting($colorQuaternary, null, null, 2.5em, null, right, null, null);
+			padding-top: 10px;
+			//animation translateLeft
+			animation: translateLeft 1500ms backwards;
+			@media (max-width: 640px){ //------------ modification ------------------------
+				@include textFormatting($colorQuaternary, null, null, 2.5em, null, center, null, 1.2em);
+			}
+		}
+
+		&__subtitle {
+			@include textFormatting($colorPrimary, null, italic, 1.7em, null, right, null, null);
+			//animation translateLeft
+			animation: translateLeft 1500ms 1500ms backwards;
+			@media (max-width: 640px){ //------------ modification ------------------------
+				@include textFormatting($colorPrimary, null, italic, 1.7em, null, justify, null, 1.2em);			
+			}
+		}
+
+		&__quote {
+			@include textFormatting(null, Times New Roman, italic, 1.3em, null, justify, null, 120%);
+			margin-left: 20%;
+			//animation translateLeft
+			animation: translateLeft 1500ms 3000ms backwards;
+			@media (max-width: 640px){ //------------ modification ------------------------
+				margin-left: 0%;
+			}
+		}
+
+		&__quote strong{
+			// @include textFormatting($colorQuaternary, null, null, null, null, null, null, null);
+			animation: ColorOrange 1000ms 4500ms forwards;
+		}
+	}
+
+/*--------------section developpement applicatif----------------*/
+
+/*LES certificats*/
+.certificats {
+	@include bloc-flex(column, null, null);
+
+	@media (min-width: 641px){
+		@include positionElementRelative(400px, null);
+	}
+		
+
+	// Gestion de projet
+	p:nth-child(2){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(50px, null, 455px, null, null, null, null);
+		}
+
+		//animation
+		strong {
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+
+	// Web
+	p:nth-child(3){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(140px, null, 470px, null, null, null, null);
+			@include textFormatting($colorPrimary, null, null, null, null, right, null, null);
+			// @include textFormatting(nul, null, nul, nul, null, center, null, null);
+		}
+		@media (max-width: 640px){
+			@include textFormatting($colorPrimary, null, null, null, null, center, null, null);
+		}
+		
+		//animation
+		strong {
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+
+	// Java
+	p:nth-child(4){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(290px, null, 420px, null, null, null, null);
+		}
+		//animation
+		strong {
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+
+	// Salesforce
+	p:nth-child(5){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(310px, null, 140px, null, null, null, null);
+		}
+		//animation
+		strong {
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+
+	// Design
+	p:nth-child(6){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(220px, null, 60px, null, null, null, null);
+		}
+		//animation
+		strong {
+			transform: scale(1);
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+
+	// SEO
+	p:nth-child(7){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(130px, null, 40px, null, null, null, null);
+		}
+		//animation
+		strong {
+			transform: scale(1);
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+
+	// Analytics
+	p:nth-child(8){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(50px, null, 110px, null, null, null, null);
+		}
+		//animation
+		strong {
+			transform: scale(1);
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+
+	// Social media
+	p:nth-child(9){
+		@media (min-width: 641px){
+			@include positionElementAbsolute(0px, null, 250px, null, null, null, null);
+		}
+		//animation
+		strong {
+		    &:hover {
+				animation: zoomText 700ms linear forwards;
+			}
+		}
+	}
+}
+
+/*UN certificat*/
+.certificat {
+	@include bloc-flex(column, center, center);
+
+	strong {
+		@include textFormatting($colorPrimary, null, null, null, null, null, underline, null);
+	}
+}
+
+.rayon {
+	@include positionElementAbsolute(100px, null, 220px, null, 180px, 180px, null);
+	@include circleShape(4px  $colorPrimary solid, null);
+	@media (max-width: 640px){ //------------ modification ------------------------
+		display: none;
+	}
+}
+
+.rond {
+	@include positionElementAbsolute(107px, null, 244px, null, 140px, 140px, null);
+	@include textFormatting(black, null, null, null, null, center, null, null);
+	@include circleShape(null, null);
+	background-color: $colorPrimary;
+	transform: rotate(340deg);
+    &:hover {
+		animation: ColorOrange 1000ms ease forwards;
+	}
+	@media (max-width: 640px){ //pour les ecran < 640px
+		display: none;
+	}
+}
+
+#openclassrooms{
+	@include textFormatting($colorQuaternary, null, null, 2em, null, center, null, null);
+	@media (min-width: 641px){ //pour les ecran > 640px
+		display: none;
+	}
+}
+
+/*--------------section formation systeme reseaux----------------*/
+.quality {
+	@include positionElementRelative(300px, 300px);
+	width: 300px;
+	margin-right: auto;
+	margin-left: auto;
+	@media (max-width: 640px){ //------------ modification ------------------------
+		order: 4;
+	}
+
+	// barre1 black
+	div:nth-child(1){
+		@include positionElementAbsolute(-127px, null, -90px, null, null, 285px, null);
+		transform: rotate(250deg);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			display: none;
+		}
+		// background-color: black
+	}
+
+	// barre2 green
+	div:nth-child(2){
+		@include positionElementAbsolute(70px, null, 282px, null, null, 45px, null);
+		transform: rotate(148deg);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			display: none;
+		}
+		// background-color: green;
+	}
+
+	// barre3 orange
+	div:nth-child(3){
+		@include positionElementAbsolute(383px, null, -50px, null, null, 205px, null);
+		transform: rotate(295deg);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			display: none;
+		}
+		// background-color: orange;
+	}
+
+	&__cercle {
+		@include bloc-flex(column, center, center);
+		@include textFormatting(white, null, null, null, null, null, null, null);
+		@include circleShape(null, $colorSecondary);
+
+		// autonome
+		&--position1 {
+			@include positionElementAbsolute(30px, null, 37px, null, 100px, 100px, 3);
+			opacity: 0.7;
+			/*background-color: red;*/
+		}
+
+		// perseverant
+		&--position2 {		
+			@include positionElementAbsolute(15px, null, 112px, null, 170px, 170px, 1);
+			color: black;
+			/*background-color: green;*/
+		}
+
+		// entreprenant
+		&--position3 {
+			@include positionElementAbsolute(105px, null, 192px, null, 100px, 100px, 4);
+			opacity: 0.8;
+			/*background-color: yellow;*/
+		}
+
+		// adaptable
+		&--position4 {
+			@include positionElementAbsolute(135px, null, 117px, null, 115px, 115px, 2);
+			opacity: 0.7;
+			/*background-color: orange;*/
+		}
+
+		// curieux
+		&--position5 {
+			@include positionElementAbsolute(105px, null, 12px, null, 130px, 130px, 5);
+			opacity: 0.9;
+			/*background-color: purple;*/
+		}
+	}	
+}
+
+/*animation big cercle suite (voir .cercle--big)*/
+#biCercle1 {
+	animation-delay: 600ms;
+}
+#biCercle2 {
+	animation-delay: 1200ms;
+}
+#biCercle3 {
+	animation-delay: 1800ms;
+}
+
+
+/* ----------section experiences complementaires----------------*/
+
+/*bloc experience complementaire*/
+.experienceComplementaire {
+	@include positionElementRelative(null, null);
+}
+
+/*bloc experiences superieurs*/
+.experienceComplementaire--height120 {
+	height: 120px;
+	@media (max-width: 640px){ //------------ modification ------------------------
+		@include bloc-flex(column, flex-start, flex-start);
+		height: 340px;
+	}
+
+
+	// 1er tableau
+	table:nth-child(1){
+		@include positionElementAbsolute(40px, null, 200px, null, null, null, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			@include positionElementAbsolute(300px, null, 0px, null, null, null, null);
+			margin-left: 40px;
+			// background-color: red;
+		}
+	}
+
+	// 2eme tableau
+	table:nth-child(2){
+		@include positionElementAbsolute(20px, null, 600px, null, null, null, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			@include positionElementAbsolute(120px, null, 0px, null, null, null, null);
+			margin-left: 40px;
+			// background-color: green;
+		}
+	}
+
+	// 3eme tableau
+	table:nth-child(3){
+		@include positionElementAbsolute(0px, null, 920px, null, null, null, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			@include positionElementAbsolute(0px, null, 0px, null, null, null, null);
+			margin-left: 40px;
+			// background-color: blue;
+		}
+	}
+}
+
+/* bloc graphique*/
+.experienceComplementaire--height100 {
+	height: 100px;
+	@media (max-width: 640px){ //------------ modification ------------------------
+			display: none;
+	}
+
+	// cercle1 red
+	div:nth-child(1){
+		@include positionElementAbsolute(140px, null, 10px, null, null, null, 2);
+		//animation cercle little suite (voir .cercle--little)
+		animation-delay: 600ms;
+		/*background-color: red;*/
+	}
+
+	// cercle2 blue
+	div:nth-child(2){
+		@include positionElementAbsolute(0px, null, 300px, null, null, null, 2);
+		//animation cercle little (voir .cercle--little)
+		animation-delay: 1200ms;
+		/*background-color: blue;*/
+	}
+
+	// cercle3 green
+	div:nth-child(3){
+		@include positionElementAbsolute(120px, null, 460px, null, null, null, 2);
+		//animation cercle little suite (voir .cercle--little)
+		animation-delay: 1800ms;
+		/*background-color: green;*/
+	}
+
+	// cercle4 yellow
+	div:nth-child(4){
+		@include positionElementAbsolute(-40px, null, 715px, null, null, null, 2);
+		//animation cercle little suite (voir .cercle--little)
+		animation-delay: 2400ms;
+		/*background-color: yellow;*/
+	}
+
+	// cercle5 orange
+	div:nth-child(5){
+		@include positionElementAbsolute(80px, null, 920px, null, null, null, 2);
+		//animation cercle little suite (voir .cercle--little)
+		animation-delay: 3000ms;
+		/*background-color: orange;*/
+	}
+	// cercle6 purple
+	div:nth-child(6){
+		@include positionElementAbsolute(-60px, null, 1050px, null, null, null, 2);
+		//animation cercle little suite (voir .cercle--little)
+		animation-delay: 3600ms;
+		/*background-color: purple;*/
+	}
+
+	// barre1 red
+	div:nth-child(7){
+		@include positionElementAbsolute(76px, null, 11px, null, null, 305px, null);
+		transform: rotate(154deg);
+		/*background-color: red;	*/
+	}
+
+	// barre2 blue
+	div:nth-child(8){
+		@include positionElementAbsolute(65px, null, 298px, null, null, 185px, null);
+		transform: rotate(38deg);
+		/*background-color: blue;	*/
+	}
+
+	// barre3 vert
+	div:nth-child(9){
+		@include positionElementAbsolute(48px, null, 455px, null, null, 284px, null);
+		transform: rotate(147deg);
+		/*background-color: green;	*/
+	}
+
+	/*barre4 yellow*/
+	div:nth-child(10){
+		@include positionElementAbsolute(25px, null, 717px, null, null, 223px, null);
+		transform: rotate(211deg);
+		/*background-color: yellow;	*/
+	}
+
+	// barre5 orange
+	div:nth-child(11){
+		@include positionElementAbsolute(18px, null, 908px, null, null, 173px, null);
+		transform: rotate(132deg);
+		/*background-color: orange;	*/
+	}
+}
+	
+/*bloc experiences inferieures*/
+.experienceComplementaire--height150 {
+	height: 150px;
+
+	// 1er tableau
+	table:nth-child(1){
+		@include positionElementAbsolute(40px, null, 0px, null, null, null, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			@include positionElementAbsolute(20px, null, 0px, null, null, null, null);
+			margin-left: 40px;
+			// background-color: yellow;
+		}
+	}
+
+	// 2eme tableau
+	table:nth-child(2){
+		@include positionElementAbsolute(20px, null, 450px, null, null, null, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			@include positionElementAbsolute(-160px, null, 0px, null, null, null, null);
+			margin-left: 40px;
+			// background-color: purple;
+		}
+	}
+
+	// 3eme tableau
+	table:nth-child(3){
+		@include positionElementAbsolute(0px, null, 910px, null, null, null, null);
+		@media (max-width: 640px){ //------------ modification ------------------------
+			@include positionElementAbsolute(-280px, null, 0px, null, null, null, null);
+			margin-left: 40px;
+		}
+	}
+}
+
+		
+/*mise en forme d'un "table"*/
+	
+	/*tableau*/
+	table {	
+		border-collapse: collapse;
+	}
+
+		/*cellules*/
+		td {
+			line-height: 4px;
+			padding-top: 0px;
+			padding-left: 10px;
+			padding-right: 10px;
+			padding-bottom: 0px;
+
+			// premiere cellule tableau
+			&:nth-child(1) {
+				border-right: 4px solid black;
+				@include textFormatting(null, null, null, null, bold, null, null, null);
+			}
+
+			// premiere cellule tableau 2eme et 4 eme paragraphe
+			&:nth-child(2) p:nth-child(2), p:nth-child(4)  {
+				@include textFormatting(null, null, italic, null, null, null, null, null);
+			}
+		}
+
+		.cell-tittle {
+			@include textFormatting($colorPrimary, null, null, null, bold, null, null, null);
+			//animation
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation: ColorOrange 5000ms forwards reverse linear infinite;
+			}
+		}
+
+		/*animation des .cell-title*/
+		#experience1 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 600ms;
+			}
+		}
+
+		#experience2 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 600ms;
+			}
+		}
+
+		#experience3 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 1200ms;
+			}
+		}
+
+		#experience4 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 1800ms;
+			}
+		}
+
+		#experience5 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 1800ms;
+			}
+		}
+
+		#experience6 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 2400ms;
+			}
+		}
+
+		#experience7 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 3000ms;
+			}
+		}
+
+		#experience8 {
+			@media (min-width: 641px){ //------------ modification ------------------------
+				animation-delay: 3600ms;
+			}
+		}
+
+/*--------------footer----------------*/
+footer {
+	@include bloc-flex(row, space-around, null);
+	@include textFormatting(white, null, null, null, null, null, null, null);
+	background-color: $colorPrimary;
+	@media (max-width: 640px){ //------------ modification ------------------------
+		@include bloc-flex(column, null,center);
+		order: 5;
+	}
+}
+
+.infoPersonnel {
+	@include bloc-flex(column, center, null);
+
+	&--orientation {
+		@include textFormatting(null, null, null, null, null, null, null, 0px);
+		align-items: center;
+		transform: rotate(330deg);
+		margin-bottom: 15px;
+		@media (max-width: 640px){
+			transform: rotate(0deg);
+		}
+	}
+
+	&__descriptif {
+		@include bloc-flex(row, null, center);
+		margin: 7px;
+
+		a {
+			@include textFormatting(white, null, null, null, null, null, none, null);
+		}
+
+		img {
+			margin-right: 10px;
+		}
+	}
+}
+
+//animation shake
+img[alt="icone telephone"] {
+	animation: shake 2000ms reverse linear infinite;
+}
